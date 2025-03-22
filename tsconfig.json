@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2024", // Or a more recent target
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "NodeNext", //This tells TypeScript to generate JavaScript modules that are compatible with Node.js's ESM specification
+    "moduleResolution": "NodeNext", //This guides TypeScript on how to resolve imports during compilation, ensuring it aligns with Node.js's ESM resolution.
     "outDir": "./build", // Output directory for compiled JavaScript
     "esModuleInterop": true, // Recommended for compatibility
     "forceConsistentCasingInFileNames": true,

@@ -1,13 +1,24 @@
 import express from "express";
 import "dotenv/config";
-import { PORT } from "./constants/env.const";
+import env from "./schemas/envSchema";
+import connectDB from "./config/db";
+import logger from "./utils/logger";
+import cookieParser from "cookie-parser";
+import authRoutes from "./routes/auth.route";
+import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 
 const app = express();
 
-app.get("/api/test", (req, res) => {
-  res.status(200).json({ message: "Server running 3" });
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.use("/api/auth", authRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
+
+app.listen(env.PORT, async () => {
+  logger.info(`Server running on http://localhost:${env.PORT}`);
+  await connectDB();
 });
