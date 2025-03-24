@@ -1,6 +1,5 @@
-import { loginSchema } from "../../schemas/authSchema";
+import { loginSchema, registerSchema } from "../../schemas/authSchema";
 import validator from "./validatorFunction";
 
-const validateLogin = validator(loginSchema);
-
-export default validateLogin;
+export const validateLogin = validator(loginSchema);
+export const validateRegister = validator(registerSchema);

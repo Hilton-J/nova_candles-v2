@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
-import { ZodObject } from "zod";
+import { ZodEffects, ZodObject } from "zod";
 
-const validator = (schema: ZodObject<any>) =>
+const validator = (schema: ZodObject<any> | ZodEffects<any>) =>
   asyncHandler(async (req, res, next) => {
     const result = schema.safeParse(req.body);
 

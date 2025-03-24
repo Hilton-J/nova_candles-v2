@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { userDocument } from "../models/user.model";
+import { userDocument } from "../interfaces/user.interface";
 
 /**
  * Generates a long-lived refresh token.

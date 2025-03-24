@@ -1,44 +1,16 @@
+import { addressDocument, userDocument } from "../interfaces/user.interface";
 import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
-export interface addressDocument extends Document {
-  recipientName: string;
-  recipientCellNumber: string;
-  streetAddress: string;
-  complex: string;
-  suburb: string;
-  city: string;
-  province: string;
-  postalCode: string;
-}
-
-export interface userDocument extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-  role: "customer" | "admin";
-  shipToAddress: addressDocument[];
-  isActive: boolean;
-  jwt_secrete: string;
-  refreshToken?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  matchPassword(enteredPassword: string): Promise<boolean>;
-  omitField(fields: string[] | string): any;
-}
-
-const addressSchema = new mongoose.Schema({
+const addressSchema = new Schema<addressDocument>({
   recipientName: { type: String },
-  recipientCellNumber: { type: String },
+  recipientLastName: { type: String },
+  recipientPhoneNumber: { type: String },
   streetAddress: { type: String },
-  complex: { type: String },
-  suburb: { type: String },
+  apartment: { type: String },
   city: { type: String },
   province: { type: String },
   postalCode: { type: String },
-  phoneNumber: { type: String },
 });
 
 const userSchema = new Schema<userDocument>(
@@ -65,7 +37,7 @@ const userSchema = new Schema<userDocument>(
     },
     shipToAddress: [addressSchema],
     isActive: { type: Boolean, default: true },
-    jwt_secrete: { type: String, required: true },
+    jwt_secret: { type: String, required: true },
     refreshToken: { type: String, default: null },
   },
   {

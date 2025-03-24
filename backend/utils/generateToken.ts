@@ -3,8 +3,8 @@ import generateAccessToken from "./generateAccessToken";
 import generateRefreshToken from "./generateRefreshToken";
 import { after30Days, after90Days } from "../constants/date.const";
 import { CookieOptions, Response } from "express";
-import { userDocument } from "../models/user.model";
 import logger from "./logger";
+import { userDocument } from "../interfaces/user.interface";
 
 const generateToken = async (res: Response, user: userDocument) => {
   try {
@@ -23,7 +23,7 @@ const generateToken = async (res: Response, user: userDocument) => {
 
     return;
   } catch (error) {
-    logger.error("Error generating tokens", error);
+    logger.error(`Error generating tokens ${error}`);
     throw new Error(`Failed to generate tokens ${error}`);
   }
 };

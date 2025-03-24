@@ -1,14 +1,15 @@
-import asynchandler from "express-async-handler";
-import HttpError from "../utils/httpError";
-import User, { userDocument } from "../models/user.model";
 import {
   NOT_FOUND,
   FORBIDDEN,
   UNAUTHORIZED,
   INTERNAL_SERVER_ERROR,
 } from "../constants/http.codes";
+import User from "../models/user.model";
+import HttpError from "../utils/httpError";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import asynchandler from "express-async-handler";
 import { NextFunction, Request, Response } from "express";
+import { userDocument } from "../interfaces/user.interface";
 
 export interface authRequest extends Request {
   user?: userDocument;
@@ -33,10 +34,10 @@ export const protect = asynchandler(
     if (!user)
       return next(new HttpError("Not authorized, user not found", NOT_FOUND));
 
-    const currentJwtSecret = user.jwt_secrete;
+    const currentJwtSecret = user.jwt_secret;
 
     if (!currentJwtSecret) {
-      next(
+      return next(
         new HttpError(
           "Server error: User jwt_secret missing",
           INTERNAL_SERVER_ERROR
@@ -46,7 +47,7 @@ export const protect = asynchandler(
 
     try {
       jwt.verify(accessToken, currentJwtSecret);
-      req.user = user.omitField("jwt_secrete");
+      req.user = user.omitField("jwt_secret");
       next();
     } catch (error) {
       next(new HttpError("Not Authorized, invalid token", UNAUTHORIZED));

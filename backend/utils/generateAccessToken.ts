@@ -1,5 +1,5 @@
 import jwt, { SignOptions } from "jsonwebtoken";
-import { userDocument } from "../models/user.model";
+import { userDocument } from "../interfaces/user.interface";
 
 /**
  * Generates a short-lived access token.
@@ -16,7 +16,7 @@ const generateAccessToken = (user: userDocument) => {
     {
       id: user._id,
     },
-    user.jwt_secrete,
+    user.jwt_secret,
     jwtOptions
   );
 };

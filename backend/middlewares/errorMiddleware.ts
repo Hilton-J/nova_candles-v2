@@ -35,9 +35,8 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ): any => {
-  // For errors in our routes
-  console.log("Error =======", err);
-  logger.error("Error Logger ======", err.stack);
+
+  logger.error(err);
 
   if (err instanceof HttpError) {
     return res.status(err.statusCode).json({

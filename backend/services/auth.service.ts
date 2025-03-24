@@ -1,13 +1,10 @@
 import { UNAUTHORIZED, CONFLICT } from "../constants/http.codes";
 import HttpError from "../utils/httpError";
-import User, { userDocument } from "../models/user.model";
+import User from "../models/user.model";
 import crypto from "crypto";
+import { registerUser, userDocument } from "../interfaces/user.interface";
 
-interface registerUser extends userDocument {
-  confirmPassword: string;
-}
-
-export const loginUser = async (credentials: userDocument) => {
+export const loginUserHandler = async (credentials: userDocument) => {
   const { email, password } = credentials;
 
   const user = await User.findOne({ email });
@@ -18,7 +15,7 @@ export const loginUser = async (credentials: userDocument) => {
   return user;
 };
 
-export const registerUser = async (userData: registerUser) => {
+export const registerUserHandler = async (userData: registerUser) => {
   const {
     firstName,
     lastName,
@@ -36,7 +33,7 @@ export const registerUser = async (userData: registerUser) => {
   if (confirmPassword !== password)
     throw new HttpError("Passwords don't match", UNAUTHORIZED);
 
-  const jwt_secrete = crypto.randomBytes(32).toString("hex");
+  const jwt_secret = crypto.randomBytes(32).toString("hex");
 
   const user = await User.create({
     firstName,
@@ -45,7 +42,7 @@ export const registerUser = async (userData: registerUser) => {
     phoneNumber,
     role,
     password,
-    jwt_secrete,
+    jwt_secret,
   });
 
   return user;
