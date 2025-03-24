@@ -1,3 +1,4 @@
+import { Response } from "express";
 import {
   deleteOneDoc,
   getAllDocs,
@@ -6,18 +7,28 @@ import {
 import User from "../models/user.model";
 import { OK } from "../constants/http.codes";
 import asyncHandler from "express-async-handler";
-import { Response } from "express";
-import { authRequest } from "../middlewares/authMiddleware";
-import { updateUser } from "../services/user.service";
+import { addShippingAddress, updateUser } from "../services/user.service";
+import { authRequest } from "../interfaces/user.interface";
 
-export const getUserByIdHandler = getOneDoc(User);
+export const getUserByIdHandler = getOneDoc(User); //This doesn't make sense. Who would be getting the user by Id
 export const getAllUsersHandler = getAllDocs(User);
 export const deleteUserHandler = deleteOneDoc(User);
 
+export const addShippingAddressHandler = asyncHandler(
+  async (req: authRequest, res: Response) => {
+    const document = await addShippingAddress(req.user!, req.body);
+
+    res.status(OK).json({
+      success: true,
+      message: `Address added successfully`,
+      results: document,
+    });
+  }
+);
+
 export const updateUserHandler = asyncHandler(
   async (req: authRequest, res: Response) => {
-    const doc = await updateUser(req.user!, req.body);
-    const document = doc.omitField(["jwt_secret", "password"]);
+    const document = await updateUser(req.user!, req.body);
 
     res.status(OK).json({
       success: true,

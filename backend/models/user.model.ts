@@ -1,5 +1,5 @@
 import { addressDocument, userDocument } from "../interfaces/user.interface";
-import mongoose, { Document, Model, Schema } from "mongoose";
+import mongoose, {  Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
 const addressSchema = new Schema<addressDocument>({
@@ -44,6 +44,8 @@ const userSchema = new Schema<userDocument>(
     timestamps: true,
   }
 );
+
+userSchema.index({ isActive: -1 });
 
 userSchema.pre("save", async function (next) {
   // let user = this as userDocument;

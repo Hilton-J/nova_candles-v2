@@ -1,4 +1,6 @@
+import { Request } from "express";
 import { Document } from "mongoose";
+
 
 export interface addressDocument extends Document {
   recipientName: string;
@@ -30,4 +32,8 @@ export interface userDocument extends Document {
 
 export interface registerUser extends userDocument {
   confirmPassword: string;
+}
+
+export interface authRequest extends Request {
+  user?: userDocument;
 }

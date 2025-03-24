@@ -5,17 +5,22 @@ import { NOT_FOUND, OK } from "../constants/http.codes";
 import { NextFunction, Request, Response } from "express";
 
 const deleteOneDoc = <T>(Model: Model<T>) =>
-  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const document = await Model.findByIdAndDelete(req.params.id);
+  asyncHandler(
+    async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+      const document = await Model.findByIdAndDelete(req.params.id);
 
-    if (!document) {
-      return next(new HttpError("No document found with that ID", NOT_FOUND));
+      if (!document) {
+        return next(
+          new HttpError(`No ${Model.modelName} found with that ID`, NOT_FOUND)
+        );
+      }
+
+      res.status(OK).json({
+        success: true,
+        message: `${Model.modelName} deleted successfully`,
+      });
     }
-
-    res.status(OK).json({
-      status: "doc deleted successfully",
-    });
-  });
+  );
 
 const updateOneDoc = <T>(Model: Model<T>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -26,42 +31,61 @@ const updateOneDoc = <T>(Model: Model<T>) =>
     });
 
     if (!document) {
-      return next(new HttpError("No document found with that ID", NOT_FOUND));
+      return next(
+        new HttpError(`No ${Model.modelName} found with that ID`, NOT_FOUND)
+      );
     }
 
     res.status(OK).json({
-      status: "doc updated successfully",
-      data: {
-        data: document,
-      },
+      success: true,
+      message: `${Model.modelName} updated successfully`,
+      results: document,
     });
   });
 
 const getOneDoc = <T>(Model: Model<T>) =>
-  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const doc = await Model.findById(req.params.id);
+  asyncHandler(
+    async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+      let query = Model.findById(req.params.id);
 
-    if (!doc) {
-      return next(new HttpError("No document found with that ID", NOT_FOUND));
+      if (Model.modelName === "User") {
+        query = query.select("-password -jwt_secret");
+      }
+
+      const document = await query;
+
+      if (!document) {
+        return next(new HttpError(`No document found with that ID`, NOT_FOUND));
+      }
+
+      res.status(OK).json(document);
     }
-
-    res.status(OK).json({
-      status: "success",
-      id: req.params.id,
-      data: doc,
-    });
-  });
+  );
 
 const getAllDocs = <T>(Model: Model<T>) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const doc = await Model.find();
+    const page = Number(req.query.page) || 1;
+    const limit = 20;
+    const skip = (page - 1) * limit;
+
+    let query = Model.find().skip(skip).limit(limit);
+    if (Model.modelName === "User") {
+      query = query.select("-password -jwt_secrete");
+    }
+
+    const document = await query;
+
+    if (!document.length) {
+      return next(new HttpError("No data found", NOT_FOUND));
+    }
+
+    const totalResults = await Model.countDocuments();
 
     res.status(OK).json({
-      status: "success",
-      result: doc.length,
-      data: {
-        data: doc,
-      },
+      page,
+      results: document,
+      totalPages: Math.ceil(totalResults / limit),
+      totalResults,
     });
   });
 
