@@ -1,5 +1,5 @@
 import { addressDocument, userDocument } from "../interfaces/user.interface";
-import mongoose, {  Model, Schema } from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
 const addressSchema = new Schema<addressDocument>({
@@ -48,7 +48,6 @@ const userSchema = new Schema<userDocument>(
 userSchema.index({ isActive: -1 });
 
 userSchema.pre("save", async function (next) {
-  // let user = this as userDocument;
   if (!this.isModified("password")) return next();
   try {
     //bcrypt.genSalt(10): Generates a salt (a random string) with 10 rounds of complexity.

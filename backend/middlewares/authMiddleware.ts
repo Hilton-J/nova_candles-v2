@@ -9,7 +9,7 @@ import HttpError from "../utils/httpError";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import asynchandler from "express-async-handler";
 import { NextFunction, Request, Response } from "express";
-import { authRequest, userDocument } from "../interfaces/user.interface";
+import { authRequest } from "../interfaces/user.interface";
 
 export const protect = asynchandler(
   async (req: authRequest, res: Response, next: NextFunction) => {

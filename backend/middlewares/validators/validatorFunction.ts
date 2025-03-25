@@ -1,5 +1,5 @@
-import asyncHandler from "express-async-handler";
 import { ZodEffects, ZodObject } from "zod";
+import asyncHandler from "express-async-handler";
 
 const validator = (schema: ZodObject<any> | ZodEffects<any>) =>
   asyncHandler(async (req, res, next) => {

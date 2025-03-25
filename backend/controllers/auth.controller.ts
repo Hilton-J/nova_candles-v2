@@ -14,15 +14,17 @@ export const loginHandler = asyncHandler(
   async (req: Request<{}, {}, userDocument>, res: Response) => {
     const user = await loginUserHandler(req.body);
     await generateToken(res, user);
-    const data = new User(user).omitField(["jwt_secrete", "password"]);
+    const data = new User(user).omitField(["jwt_secret", "password"]);
     res.status(OK).json(data);
   }
 );
 
-export const logoutHandler = asyncHandler(async (req: Request, res: Response) => {
-  clearAuthCookies(res);
-  res.status(OK).json({ success: true, message: "User logged out" });
-});
+export const logoutHandler = asyncHandler(
+  async (req: Request, res: Response) => {
+    clearAuthCookies(res);
+    res.status(OK).json({ success: true, message: "User logged out" });
+  }
+);
 
 export const registerHandler = asyncHandler(
   async (req: Request<{}, {}, registerUser>, res: Response) => {

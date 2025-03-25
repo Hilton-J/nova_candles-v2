@@ -9,6 +9,7 @@ import { OK } from "../constants/http.codes";
 import asyncHandler from "express-async-handler";
 import { addShippingAddress, updateUser } from "../services/user.service";
 import { authRequest } from "../interfaces/user.interface";
+import mongoose, { ObjectId } from "mongoose";
 
 export const getUserByIdHandler = getOneDoc(User); //This doesn't make sense. Who would be getting the user by Id
 export const getAllUsersHandler = getAllDocs(User);
@@ -28,7 +29,12 @@ export const addShippingAddressHandler = asyncHandler(
 
 export const updateUserHandler = asyncHandler(
   async (req: authRequest, res: Response) => {
-    const document = await updateUser(req.user!, req.body);
+    const { _id } = req.user!;
+
+    const document = await updateUser(
+      new mongoose.Types.ObjectId(_id as string),
+      req.body
+    );
 
     res.status(OK).json({
       success: true,

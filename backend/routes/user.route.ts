@@ -10,7 +10,7 @@ import {
 import {
   validateShippingAddress,
   validateUpdateUser,
-} from "../middlewares/validators/userValidators";
+} from "../middlewares/validators/userValidator";
 
 const router = Router();
 

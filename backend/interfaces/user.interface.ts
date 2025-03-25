@@ -1,7 +1,6 @@
 import { Request } from "express";
 import { Document } from "mongoose";
 
-
 export interface addressDocument extends Document {
   recipientName: string;
   recipientLastName: string;
