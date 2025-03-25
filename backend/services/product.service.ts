@@ -58,3 +58,13 @@ export const addReview = async (
 
   return document;
 };
+
+export const getProductByNameAndSize = async (name: string, size: string) => {
+  const document = await Product.findOne({ productName: name, size });
+
+  if (!document) {
+    throw new HttpError("Product not found", NOT_FOUND);
+  }
+
+  return document;
+};

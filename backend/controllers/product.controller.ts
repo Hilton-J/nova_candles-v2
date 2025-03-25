@@ -1,9 +1,24 @@
 import asyncHandler from "express-async-handler";
 import { NextFunction, Request, Response } from "express";
-import { addReview, createProduct } from "../services/product.service";
+import {
+  addReview,
+  createProduct,
+  getProductByNameAndSize,
+} from "../services/product.service";
 import { CREATED, OK } from "../constants/http.codes";
 import { authRequest } from "../interfaces/user.interface";
 import mongoose from "mongoose";
+import {
+  deleteOneDoc,
+  getAllDocs,
+  updateOneDoc,
+} from "../services/crudHandlerFactory";
+import Product from "../models/product.model";
+
+export const getAllProductsHandler = getAllDocs(Product);
+export const deleteProductHandler = deleteOneDoc(Product);
+export const updateProductHandler = updateOneDoc(Product);
+//BUG: Above need to be tested
 
 export const createProductHandler = asyncHandler(
   async (req: Request, res: Response) => {
@@ -29,7 +44,21 @@ export const addReviewHandler = asyncHandler(
     res.status(OK).json({
       success: true,
       message: `Review added successfully`,
-      results: document
+      results: document,
     });
+  }
+);
+
+export const getProductByNameAndSizeHandler = asyncHandler(
+  async (
+    req: Request<{ name: string }, {}, {}, { size: string }>,
+    res: Response
+  ) => {
+    const document = await getProductByNameAndSize(
+      req.params.name,
+      req.query.size
+    );
+
+    res.status(OK).json(document);
   }
 );
