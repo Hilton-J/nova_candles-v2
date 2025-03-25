@@ -18,7 +18,7 @@ import Product from "../models/product.model";
 export const getAllProductsHandler = getAllDocs(Product);
 export const deleteProductHandler = deleteOneDoc(Product);
 export const updateProductHandler = updateOneDoc(Product);
-//BUG: Above need to be tested
+//TODO: Above needs testing
 
 export const createProductHandler = asyncHandler(
   async (req: Request, res: Response) => {

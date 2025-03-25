@@ -18,6 +18,7 @@ export const productSchema = z.object({
   images: z.string().regex(base64ImageRegex, "Invalid base64 image").optional(),
 });
 
+//TODO: Add images field in this Schema for it to be here
 export const updateProductSchema = z.object({
   productName: z.string().min(1).optional(),
   description: z.string().min(1).optional(),
