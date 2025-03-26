@@ -1,11 +1,11 @@
-import HttpError from "../utils/httpError";
-import Product from "../models/product.model";
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http.codes";
+import { Types } from "mongoose";
 import {
   productDocument,
   reviewDocument,
 } from "../interfaces/product.interface";
-import mongoose from "mongoose";
+import HttpError from "../utils/httpError";
+import Product from "../models/product.model";
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http.codes";
 
 export const createProduct = async (productData: productDocument) => {
   const { productName, size } = productData;
@@ -26,12 +26,12 @@ export const createProduct = async (productData: productDocument) => {
 };
 
 export const addReview = async (
-  id: mongoose.Types.ObjectId,
+  id: Types.ObjectId,
   reviewData: reviewDocument
 ) => {
   const reviewed = await Product.findOne({
     _id: id,
-    "reviews.userId": reviewData.id,
+    "reviews.userId": reviewData.userId,
   });
 
   if (reviewed) {
@@ -61,6 +61,24 @@ export const addReview = async (
 
 export const getProductByNameAndSize = async (name: string, size: string) => {
   const document = await Product.findOne({ productName: name, size });
+
+  if (!document) {
+    throw new HttpError("Product not found", NOT_FOUND);
+  }
+
+  return document;
+};
+
+export const addImage = async (id: Types.ObjectId, images: string) => {
+  const document = await Product.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        images,
+      },
+    },
+    { new: true, runValidators: true, timestamps: true }
+  );
 
   if (!document) {
     throw new HttpError("Product not found", NOT_FOUND);

@@ -1,11 +1,11 @@
-import mongoose, { Model, Schema } from "mongoose";
 import {
   productDocument,
   reviewDocument,
 } from "../interfaces/product.interface";
+import { model, Model, Schema } from "mongoose";
 
 const reviewSchema = new Schema<reviewDocument>({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
   rating: { type: Number, enum: [1, 2, 3, 4, 5], required: true },
   comment: String,
   date: { type: Date, default: Date.now },
@@ -30,6 +30,9 @@ const productSchema = new Schema<productDocument>(
 
 productSchema.index({ productName: 1, size: 1 });
 
-const Product = mongoose.model("Product", productSchema);
+const Product: Model<productDocument> = model<productDocument>(
+  "Product",
+  productSchema
+);
 
 export default Product;

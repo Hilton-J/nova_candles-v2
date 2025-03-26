@@ -1,10 +1,13 @@
 import { Router } from "express";
 import { authorizeRoles, protect } from "../middlewares/authMiddleware";
 import validatePayment from "../middlewares/validators/paymentValidator";
+import { createPaymentHandler, getAllPaymentsHandler } from "../controllers/payment.controller";
 
 const router = Router();
 
-router.post("/", protect, authorizeRoles("customer"), validatePayment);
-router.get("/", protect, authorizeRoles("admin"));
+router
+  .route("/")
+  .get(protect, authorizeRoles("admin"), getAllPaymentsHandler)
+  .post(protect, authorizeRoles("customer"), validatePayment,createPaymentHandler);
 
 export default router;

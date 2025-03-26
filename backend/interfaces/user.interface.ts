@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface addressDocument extends Document {
   recipientName: string;
@@ -13,6 +13,7 @@ export interface addressDocument extends Document {
 }
 
 export interface userDocument extends Document {
+   _id: Types.ObjectId;
   firstName: string;
   lastName: string;
   email: string;

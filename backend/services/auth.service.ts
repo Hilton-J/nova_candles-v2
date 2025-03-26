@@ -1,4 +1,4 @@
-import { UNAUTHORIZED, CONFLICT } from "../constants/http.codes";
+import { UNAUTHORIZED, CONFLICT, BAD_REQUEST } from "../constants/http.codes";
 import HttpError from "../utils/httpError";
 import User from "../models/user.model";
 import crypto from "crypto";
@@ -44,6 +44,10 @@ export const registerUserHandler = async (userData: registerUser) => {
     password,
     jwt_secret,
   });
+
+  if (!user) {
+    throw new HttpError("Invalid user data", BAD_REQUEST);
+  }
 
   return user;
 };

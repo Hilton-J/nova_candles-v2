@@ -1,6 +1,6 @@
-import { addressDocument, userDocument } from "../interfaces/user.interface";
-import mongoose, { Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
+import { model, Model, Schema } from "mongoose";
+import { addressDocument, userDocument } from "../interfaces/user.interface";
 
 const addressSchema = new Schema<addressDocument>({
   recipientName: { type: String },
@@ -78,9 +78,6 @@ userSchema.methods.omitField = function (fields: string[] | string) {
   return user;
 };
 
-const User: Model<userDocument> = mongoose.model<userDocument>(
-  "User",
-  userSchema
-);
+const User: Model<userDocument> = model<userDocument>("User", userSchema);
 
 export default User;

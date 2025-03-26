@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addImageHandler,
   addReviewHandler,
   createProductHandler,
   deleteProductHandler,
@@ -9,6 +10,7 @@ import {
 } from "../controllers/product.controller";
 import {
   validateCreateProduct,
+  validateImage,
   validateReviewProduct,
   validateUpdateProduct,
 } from "../middlewares/validators/productValidator";
@@ -44,6 +46,7 @@ router
     validateUpdateProduct,
     updateProductHandler
   )
-  .delete(protect, authorizeRoles("admin"), deleteProductHandler);
+  .delete(protect, authorizeRoles("admin"), deleteProductHandler)
+  .patch(protect, authorizeRoles("admin"), validateImage, addImageHandler);
 
 export default router;

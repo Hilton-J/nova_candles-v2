@@ -32,7 +32,7 @@ export const updateUserHandler = asyncHandler(
     const { _id } = req.user!;
 
     const document = await updateUser(
-      new mongoose.Types.ObjectId(_id as string),
+      new mongoose.Types.ObjectId(_id),
       req.body
     );
 
