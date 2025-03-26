@@ -12,8 +12,11 @@ export interface addressDocument extends Document {
   postalCode: string;
 }
 
-export interface userDocument extends Document {
-   _id: Types.ObjectId;
+export interface userDocument extends IUser, Document {
+  _id: Types.ObjectId;
+}
+
+export interface IUser {
   firstName: string;
   lastName: string;
   email: string;

@@ -8,7 +8,7 @@ import User from "../models/user.model";
 import { OK } from "../constants/http.codes";
 import asyncHandler from "express-async-handler";
 import { addShippingAddress, updateUser } from "../services/user.service";
-import { authRequest } from "../interfaces/user.interface";
+import { authRequest, userDocument } from "../interfaces/user.interface";
 import mongoose, { ObjectId } from "mongoose";
 
 export const getUserByIdHandler = getOneDoc(User); //This doesn't make sense. Who would be getting the user by Id
