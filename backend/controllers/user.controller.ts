@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { Response } from "express";
 import {
   deleteOneDoc,
@@ -7,9 +8,8 @@ import {
 import User from "../models/user.model";
 import { OK } from "../constants/http.codes";
 import asyncHandler from "express-async-handler";
+import { authRequest } from "../interfaces/user.interface";
 import { addShippingAddress, updateUser } from "../services/user.service";
-import { authRequest, userDocument } from "../interfaces/user.interface";
-import mongoose, { ObjectId } from "mongoose";
 
 export const getUserByIdHandler = getOneDoc(User); //This doesn't make sense. Who would be getting the user by Id
 export const getAllUsersHandler = getAllDocs(User);
@@ -31,10 +31,7 @@ export const updateUserHandler = asyncHandler(
   async (req: authRequest, res: Response) => {
     const { _id } = req.user!;
 
-    const document = await updateUser(
-      new mongoose.Types.ObjectId(_id),
-      req.body
-    );
+    const document = await updateUser(new Types.ObjectId(_id), req.body);
 
     res.status(OK).json({
       success: true,

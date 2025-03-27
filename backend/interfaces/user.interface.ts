@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { Document, Types } from "mongoose";
 
-export interface addressDocument extends Document {
+export interface IAddress {
   recipientName: string;
   recipientLastName: string;
   recipientPhoneNumber: string;
@@ -11,8 +11,7 @@ export interface addressDocument extends Document {
   province: string;
   postalCode: string;
 }
-
-export interface userDocument extends IUser, Document {
+export interface addressDocument extends IAddress, Document {
   _id: Types.ObjectId;
 }
 
@@ -31,6 +30,9 @@ export interface IUser {
   updatedAt: Date;
   matchPassword(enteredPassword: string): Promise<boolean>;
   omitField(fields: string[] | string): any;
+}
+export interface userDocument extends IUser, Document {
+  _id: Types.ObjectId;
 }
 
 export interface registerUser extends userDocument {

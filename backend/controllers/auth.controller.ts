@@ -1,13 +1,13 @@
-import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken";
-import User from "../models/user.model";
 import {
   loginUserHandler,
   registerUserHandler,
 } from "../services/auth.service";
-import { clearAuthCookies } from "../utils/authCookie";
-import { CREATED, OK } from "../constants/http.codes";
+import User from "../models/user.model";
 import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
+import generateToken from "../utils/generateToken";
+import { CREATED, OK } from "../constants/http.codes";
+import { clearAuthCookies } from "../utils/authCookie";
 import { registerUser, userDocument } from "../interfaces/user.interface";
 
 export const loginHandler = asyncHandler(

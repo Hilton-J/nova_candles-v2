@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
 import { z } from "zod";
+import { Types } from "mongoose";
 
 const paymentSchema = z.object({
   orderId: z
     .string()
     .trim()
-    .refine((val) => mongoose.Types.ObjectId.isValid(val), "Invalid Id"),
+    .refine((val) => Types.ObjectId.isValid(val), "Invalid Id"),
   paymentMethod: z.string().trim(),
   cardBrand: z.string().trim(),
   status: z.string().trim(),

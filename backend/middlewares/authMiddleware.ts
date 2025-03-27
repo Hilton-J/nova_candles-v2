@@ -13,7 +13,8 @@ import { authRequest } from "../interfaces/user.interface";
 
 export const protect = asynchandler(
   async (req: authRequest, res: Response, next: NextFunction) => {
-    const accessToken = req.cookies.jwt_token;
+    const accessToken = req.cookies.jwt_token_v2;
+
     if (!accessToken)
       return next(
         new HttpError("Not Authorized, invalid accessToken", UNAUTHORIZED)
@@ -46,7 +47,7 @@ export const protect = asynchandler(
       req.user = user.omitField("jwt_secret");
       next();
     } catch (error) {
-      next(new HttpError("Not Authorized, invalid token", UNAUTHORIZED));
+      next(new HttpError(`Not Authorized, invalid token`, UNAUTHORIZED));
     }
   }
 );

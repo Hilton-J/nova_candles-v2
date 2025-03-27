@@ -1,6 +1,6 @@
 import { Document, Types } from "mongoose";
 
-interface paymentDocument extends Document {
+export interface IPayment {
   orderId: Types.ObjectId;
   userId: Types.ObjectId;
   paymentMethod: string;
@@ -12,4 +12,6 @@ interface paymentDocument extends Document {
   updatedAt: Date;
 }
 
-export default paymentDocument;
+export interface paymentDocument extends IPayment, Document {
+  _id: Types.ObjectId;
+}

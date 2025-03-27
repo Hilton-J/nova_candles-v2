@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { protect, authorizeRoles } from "../middlewares/authMiddleware";
 import {
   getAllUsersHandler,
   getUserByIdHandler,
@@ -11,6 +10,7 @@ import {
   validateShippingAddress,
   validateUpdateUser,
 } from "../middlewares/validators/userValidator";
+import { protect, authorizeRoles } from "../middlewares/authMiddleware";
 
 const router = Router();
 

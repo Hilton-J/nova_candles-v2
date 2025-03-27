@@ -3,9 +3,9 @@ import { Response } from "express";
 import Payment from "../models/payment.model";
 import asyncHandler from "express-async-handler";
 import { CREATED } from "../constants/http.codes";
-import { authRequest, userDocument } from "../interfaces/user.interface";
 import { createPayment } from "../services/payment.service";
 import { getAllDocs } from "../services/crudHandlerFactory";
+import { authRequest, userDocument } from "../interfaces/user.interface";
 
 export const getAllPaymentsHandler = getAllDocs(Payment);
 

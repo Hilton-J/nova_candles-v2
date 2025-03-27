@@ -1,6 +1,6 @@
 import { Document, Types } from "mongoose";
 
-export interface productDocument extends Document {
+export interface IProduct {
   productName: string;
   description: string;
   price: number;
@@ -13,10 +13,16 @@ export interface productDocument extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface productDocument extends IProduct, Document {
+  _id: Types.ObjectId;
+}
 
-export interface reviewDocument extends Document {
+export interface IReview {
   userId: Types.ObjectId;
   rating: number;
   comment: string;
   date: Date;
+}
+export interface reviewDocument extends IReview, Document {
+  _id: Types.ObjectId;
 }

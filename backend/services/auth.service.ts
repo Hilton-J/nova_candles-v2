@@ -1,8 +1,8 @@
-import { UNAUTHORIZED, CONFLICT, BAD_REQUEST } from "../constants/http.codes";
-import HttpError from "../utils/httpError";
-import User from "../models/user.model";
 import crypto from "crypto";
+import User from "../models/user.model";
+import HttpError from "../utils/httpError";
 import { registerUser, userDocument } from "../interfaces/user.interface";
+import { UNAUTHORIZED, CONFLICT, BAD_REQUEST } from "../constants/http.codes";
 
 export const loginUserHandler = async (credentials: userDocument) => {
   const { email, password } = credentials;

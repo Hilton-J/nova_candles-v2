@@ -1,8 +1,8 @@
+import { Types } from "mongoose";
 import HttpError from "../utils/httpError";
 import Payment from "../models/payment.model";
-import paymentDocument from "../interfaces/payment.interface";
 import { CONFLICT, BAD_REQUEST } from "../constants/http.codes";
-import { Types } from "mongoose";
+import { paymentDocument } from "../interfaces/payment.interface";
 
 export const createPayment = async (
   userId: Types.ObjectId,

@@ -9,7 +9,7 @@ const generateAccessToken = (user: userDocument) => {
   const jwtOptions: SignOptions = {
     expiresIn: "24h", // the cookie will expire after 24 Hours
     issuer: "novacandles.com",
-    audience: "API V1",
+    audience: "API V2",
   };
 
   return jwt.sign(
