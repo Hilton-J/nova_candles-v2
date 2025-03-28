@@ -14,24 +14,23 @@ const generateToken = async (res: Response, user: userDocument) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    if (!res.headersSent) {
-      res.cookie("jwt_token_v2", accessToken, {
-        httpOnly: true,
-        secure: env.NODE_ENV === "production",
-        sameSite: "strict", //This prevents CSRF (Cross Site ERequest Forgery) attachs
-        expires: after30Days(), //Will expire after 30 day
-        path: "/apiv2",
-      });
-      res.cookie("refreshToken_v2", refreshToken, {
-        httpOnly: true,
-        sameSite: "strict",
-        secure: env.NODE_ENV === "production", // Use secure cookies only in production
-        expires: after90Days(), // Long-lived refresh token
-        path: "/api/refreshv2", // Adjust as needed, separate endpoint for refresh
-      });
-    } else {
+    if (res.headersSent) {
       logger.error("Headers already sent; cannot set cookies.");
     }
+
+    res.cookie(
+      "jwt_token_v2",
+      accessToken,
+      accessCookieOptions as CookieOptions
+    );
+
+    res.cookie(
+      "refreshToken_v2",
+      refreshToken,
+      refreshCookieOptions as CookieOptions
+    );
+
+    console.log("AuthMiddleware line 36", res.cookie);
 
     return;
   } catch (error) {
@@ -45,7 +44,7 @@ const generateToken = async (res: Response, user: userDocument) => {
  *
  * @returns {Object} The cookie options.
  */
-const accessCookieOptions = () => ({
+const accessCookieOptions = (): CookieOptions => ({
   httpOnly: true,
   secure: env.NODE_ENV === "production",
   sameSite: "strict", //This prevents CSRF (Cross Site ERequest Forgery) attachs
@@ -58,12 +57,12 @@ const accessCookieOptions = () => ({
  *
  * @returns {Object} The cookie options.
  */
-const refreshCookieOptions = () => ({
+const refreshCookieOptions = (): CookieOptions => ({
   httpOnly: true,
   sameSite: "strict",
   secure: env.NODE_ENV === "production", // Use secure cookies only in production
   expires: after90Days(), // Long-lived refresh token
-  path: "/api/refreshv2", // Adjust as needed, separate endpoint for refresh
+  path: "/apiv2/refresh", // Adjust as needed, separate endpoint for refresh
 });
 
 export default generateToken;

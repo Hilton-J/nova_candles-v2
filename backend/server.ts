@@ -16,10 +16,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/product", productRoutes);
-app.use("/api/payment", paymentRoutes);
+app.use("/apiv2/auth", authRoutes);
+app.use("/apiv2/user", userRoutes);
+app.use("/apiv2/product", productRoutes);
+app.use("/apiv2/payment", paymentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

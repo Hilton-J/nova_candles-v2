@@ -8,7 +8,7 @@ import { userDocument } from "../interfaces/user.interface";
 const generateAccessToken = (user: userDocument) => {
   const jwtOptions: SignOptions = {
     expiresIn: "24h", // the cookie will expire after 24 Hours
-    issuer: "novacandles.com",
+    issuer: "novacandlesv2.com",
     audience: "API V2",
   };
 
