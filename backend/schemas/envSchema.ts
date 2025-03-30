@@ -5,7 +5,7 @@ const envs = process.env;
 
 const zodEnv = new ZodEnv(
   z.object({
-    PORT: z.coerce.number(),
+    PORT: z.coerce.number().optional(),
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
