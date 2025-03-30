@@ -16,6 +16,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.send("Hello from Vercel!");
+});
+
 app.use("/apiv2/auth", authRoutes);
 app.use("/apiv2/user", userRoutes);
 app.use("/apiv2/product", productRoutes);
