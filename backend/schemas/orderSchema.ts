@@ -8,6 +8,7 @@ const orderSchema = z
     billingAddress: addressSchema,
     totalPrice: z.coerce.number(),
     items: z.array(itemSchema),
+    orderDate: z.date().default(() => new Date()),
   })
   .strict();
 

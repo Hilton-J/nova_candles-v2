@@ -6,6 +6,7 @@ const itemSchema = z.object({
     .string()
     .refine((val) => Types.ObjectId.isValid(val), "Invalid id format"),
   quantity: z.coerce.number().default(1),
+  price: z.coerce.number(),
 });
 
 export default itemSchema;

@@ -1,6 +1,7 @@
 import itemsSchema from "./items.schema";
 import { Model, model, Schema } from "mongoose";
 import { orderDocument } from "../interfaces/order.interface";
+import { addressSchema } from "./user.model";
 
 const orderSchema = new Schema<orderDocument>(
   {
@@ -13,16 +14,8 @@ const orderSchema = new Schema<orderDocument>(
       ref: "User",
       required: true,
     },
-    deliveryAddress: {
-      type: Schema.Types.ObjectId,
-      ref: "Address",
-      required: true,
-    },
-    billingAddress: {
-      type: Schema.Types.ObjectId,
-      ref: "Address",
-      required: true,
-    },
+    deliveryAddress: addressSchema,
+    billingAddress: addressSchema,
   },
   {
     timestamps: true,

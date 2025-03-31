@@ -4,6 +4,7 @@ import connectDB from "../backend/config/db";
 import cookieParser from "cookie-parser";
 import authRoutes from "../backend/routes/auth.route";
 import userRoutes from "../backend/routes/user.route";
+import orderRoutes from "../backend/routes/order.route";
 import productRoutes from "../backend/routes/product.route";
 import paymentRoutes from "../backend/routes/payment.route";
 import { errorHandler, notFound } from "../backend/middlewares/errorMiddleware";
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/apiv2/auth", authRoutes);
 app.use("/apiv2/user", userRoutes);
+app.use("/apiv2/order", orderRoutes);
 app.use("/apiv2/product", productRoutes);
 app.use("/apiv2/payment", paymentRoutes);
 

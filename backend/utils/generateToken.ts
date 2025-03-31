@@ -30,8 +30,6 @@ const generateToken = async (res: Response, user: userDocument) => {
       refreshCookieOptions as CookieOptions
     );
 
-    console.log("AuthMiddleware line 36", res.cookie);
-
     return;
   } catch (error) {
     logger.error(`Error generating tokens ${error}`);

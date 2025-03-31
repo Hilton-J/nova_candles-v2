@@ -15,8 +15,6 @@ export const protect = asynchandler(
   async (req: authRequest, res: Response, next: NextFunction) => {
     const accessToken = req.cookies.jwt_token_v2;
 
-    console.log(req);
-
     if (!accessToken)
       return next(
         new HttpError("Not Authorized, invalid accessToken", UNAUTHORIZED)

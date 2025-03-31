@@ -15,7 +15,9 @@ export const createOrder = async (orderData: orderDocument) => {
 };
 
 export const getCustomerOrders = async (userId: Types.ObjectId) => {
-  const document = await Order.find({ userId });
+  const document = await Order.find({ userId })
+    .populate({ path: "items.productId", select: "productName size" })
+    .populate({ path: "userId", select: "firstName LastName email" });
 
   if (!document) {
     throw new HttpError("No orders for this user", NOT_FOUND);

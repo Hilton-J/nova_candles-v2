@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { model, Model, Schema } from "mongoose";
 import { addressDocument, userDocument } from "../interfaces/user.interface";
 
-const addressSchema = new Schema<addressDocument>({
+export const addressSchema = new Schema<addressDocument>({
   recipientName: { type: String },
   recipientLastName: { type: String },
   recipientPhoneNumber: { type: String },
