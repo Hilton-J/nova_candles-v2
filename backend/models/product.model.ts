@@ -5,7 +5,7 @@ import {
 import { model, Model, Schema } from "mongoose";
 
 const reviewSchema = new Schema<reviewDocument>({
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   rating: { type: Number, enum: [1, 2, 3, 4, 5], required: true },
   comment: String,
   date: { type: Date, default: Date.now },
