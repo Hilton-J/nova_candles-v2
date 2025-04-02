@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
 import Cart from "../models/cart.model";
 import HttpError from "../utils/httpError";
-import { NOT_FOUND } from "../constants/http.codes";
 import Product from "../models/product.model";
+import { IItem } from "../models/items.schema";
+import { BAD_REQUEST, NOT_FOUND } from "../constants/http.codes";
 
 export const getUserCart = async (userId: Types.ObjectId) => {
   const document = await Cart.findOne({ userId }).populate({
@@ -44,11 +45,8 @@ export const removeItem = async (
   return document;
 };
 
-export const addCart = async (
-  productId: Types.ObjectId,
-  userId: Types.ObjectId
-) => {
-  const product = await Product.findById(productId);
+export const addCart = async (itemData: IItem, userId: Types.ObjectId) => {
+  const product = await Product.findById(itemData.productId);
 
   if (!product) {
     throw new HttpError("No product found with that ID", NOT_FOUND);
@@ -57,6 +55,48 @@ export const addCart = async (
   const document = await Cart.findOne({ userId });
 
   if (!document) {
-    const createCart = await Cart.create({})
+    const createCart = await Cart.create({
+      userId,
+      items: itemData,
+      totalPrice: itemData.price * itemData.quantity,
+    });
+
+    if (!createCart) throw new HttpError("Error creating cart", BAD_REQUEST);
+
+    return createCart;
   }
+
+  const itemExists = document.items.find(
+    (item) => item.productId === itemData.productId
+  );
+
+  if (itemExists) {
+    itemExists.quantity += itemData.quantity;
+  } else {
+    document.items.push(itemData);
+  }
+
+  document.totalPrice = document.items.reduce(
+    (acc: number, item: IItem) => acc + item.quantity * item.price,
+    0
+  );
+
+  return document;
+};
+
+export const updateItemQuantity = async (
+  itemData: IItem,
+  userId: Types.ObjectId
+) => {
+  const document = await Cart.findOneAndUpdate(
+    { userId, "items.productId": itemData.productId },
+    { $set: { "items.$.quantity": itemData.quantity } },
+    { new: true, runValidators: true, timestamps: true }
+  );
+
+  if (!document) {
+    throw new HttpError("Cart not found", NOT_FOUND);
+  }
+
+  return document;
 };

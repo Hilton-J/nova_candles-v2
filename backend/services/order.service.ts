@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
 import Order from "../models/order.model";
-import { NOT_FOUND, CREATED, BAD_REQUEST } from "../constants/http.codes";
-import { orderDocument } from "../interfaces/order.interface";
 import HttpError from "../utils/httpError";
+import { orderDocument } from "../interfaces/order.interface";
+import { NOT_FOUND, BAD_REQUEST } from "../constants/http.codes";
 
 export const createOrder = async (orderData: orderDocument) => {
   const document = await Order.create(orderData);

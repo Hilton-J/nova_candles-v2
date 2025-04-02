@@ -6,6 +6,7 @@ import {
 import HttpError from "../utils/httpError";
 import Product from "../models/product.model";
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http.codes";
+import Order from "../models/order.model";
 
 export const createProduct = async (productData: productDocument) => {
   const { productName, size } = productData;

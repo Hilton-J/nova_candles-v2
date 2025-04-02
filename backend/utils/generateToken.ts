@@ -14,21 +14,12 @@ const generateToken = async (res: Response, user: userDocument) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    if (res.headersSent) {
+    if (!res.headersSent) {
+      res.cookie("jwt_token_v2", accessToken, accessCookieOptions());
+      res.cookie("refreshToken_v2", refreshToken, refreshCookieOptions());
+    } else {
       logger.error("Headers already sent; cannot set cookies.");
     }
-
-    res.cookie(
-      "jwt_token_v2",
-      accessToken,
-      accessCookieOptions as CookieOptions
-    );
-
-    res.cookie(
-      "refreshToken_v2",
-      refreshToken,
-      refreshCookieOptions as CookieOptions
-    );
 
     return;
   } catch (error) {
