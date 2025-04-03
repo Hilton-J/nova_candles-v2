@@ -3,7 +3,7 @@ import Cart from "../models/cart.model";
 import HttpError from "../utils/httpError";
 import Product from "../models/product.model";
 import { IItem } from "../models/items.schema";
-import { BAD_REQUEST, NOT_FOUND } from "../constants/http.codes";
+import { BAD_REQUEST, CREATED, NOT_FOUND, OK } from "../constants/http.codes";
 
 export const getUserCart = async (userId: Types.ObjectId) => {
   const document = await Cart.findOne({ userId }).populate({
@@ -32,6 +32,7 @@ export const removeItem = async (
   productId: Types.ObjectId,
   userId: Types.ObjectId
 ) => {
+  
   const document = await Cart.findOneAndUpdate(
     { userId, "items.productId": productId },
     { $pull: { items: { productId } } },
@@ -42,44 +43,12 @@ export const removeItem = async (
     throw new HttpError("Cart not found", NOT_FOUND);
   }
 
-  return document;
-};
-
-export const addCart = async (itemData: IItem, userId: Types.ObjectId) => {
-  const product = await Product.findById(itemData.productId);
-
-  if (!product) {
-    throw new HttpError("No product found with that ID", NOT_FOUND);
-  }
-
-  const document = await Cart.findOne({ userId });
-
-  if (!document) {
-    const createCart = await Cart.create({
-      userId,
-      items: itemData,
-      totalPrice: itemData.price * itemData.quantity,
-    });
-
-    if (!createCart) throw new HttpError("Error creating cart", BAD_REQUEST);
-
-    return createCart;
-  }
-
-  const itemExists = document.items.find(
-    (item) => item.productId === itemData.productId
-  );
-
-  if (itemExists) {
-    itemExists.quantity += itemData.quantity;
-  } else {
-    document.items.push(itemData);
-  }
-
   document.totalPrice = document.items.reduce(
-    (acc: number, item: IItem) => acc + item.quantity * item.price,
+    (acc, item) => acc + item.quantity * item.price,
     0
   );
+
+  await document.save();
 
   return document;
 };
@@ -98,5 +67,55 @@ export const updateItemQuantity = async (
     throw new HttpError("Cart not found", NOT_FOUND);
   }
 
+  document.totalPrice = document.items.reduce(
+    (acc, item) => acc + item.quantity * item.price,
+    0
+  );
+
+  await document.save();
+
   return document;
+};
+
+export const addCart = async (itemData: IItem, userId: Types.ObjectId) => {
+  let statusCode;
+  const product = await Product.findById(itemData.productId);
+
+  if (!product) {
+    throw new HttpError("No product found with that ID", NOT_FOUND);
+  }
+
+  const document = await Cart.findOne({ userId });
+
+  if (!document) {
+    const document = await Cart.create({
+      userId,
+      items: itemData,
+      totalPrice: itemData.price * itemData.quantity,
+    });
+
+    if (!document) throw new HttpError("Error creating cart", BAD_REQUEST);
+    statusCode = CREATED;
+
+    return { document, statusCode };
+  }
+
+  const itemExists = document.items.find(
+    (item) => item.productId === itemData.productId
+  );
+
+  if (itemExists) {
+    itemExists.quantity += itemData.quantity;
+  } else {
+    document.items.push(itemData);
+  }
+
+  document.totalPrice = document.items.reduce(
+    (acc, item) => acc + item.quantity * item.price,
+    0
+  );
+
+  statusCode = OK;
+
+  return { document, statusCode };
 };

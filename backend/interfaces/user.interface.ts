@@ -39,6 +39,6 @@ export interface registerUser extends userDocument {
   confirmPassword: string;
 }
 
-export interface authRequest extends Request {
-  user?: userDocument;
-}
+// export interface authRequest extends Request {
+//   user?: userDocument;
+// }

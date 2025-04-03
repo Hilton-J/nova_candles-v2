@@ -9,10 +9,9 @@ import HttpError from "../utils/httpError";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import asynchandler from "express-async-handler";
 import { NextFunction, Request, Response } from "express";
-import { authRequest } from "../interfaces/user.interface";
 
 export const protect = asynchandler(
-  async (req: authRequest, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const accessToken = req.cookies.jwt_token_v2;
 
     if (!accessToken)
@@ -53,7 +52,7 @@ export const protect = asynchandler(
 );
 
 export const authorizeRoles = (...roles: string[]) => {
-  return (req: authRequest, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     if (req.user && roles.includes(req.user.role)) {
       next();
     } else {

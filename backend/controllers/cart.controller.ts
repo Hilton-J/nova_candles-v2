@@ -1,12 +1,18 @@
-import { Response } from "express";
-import asyncHandler from "express-async-handler";
-import { CREATED, OK } from "../constants/http.codes";
-import { authRequest, userDocument } from "../interfaces/user.interface";
-import { getUserCart, removeCart, removeItem } from "../services/cart.service";
 import { Types } from "mongoose";
+import {
+  addCart,
+  getUserCart,
+  removeCart,
+  removeItem,
+  updateItemQuantity,
+} from "../services/cart.service";
+import { Response, Request } from "express";
+import { OK } from "../constants/http.codes";
+import asyncHandler from "express-async-handler";
+import { userDocument } from "../interfaces/user.interface";
 
 export const getUserCartHandler = asyncHandler(
-  async (req: authRequest, res: Response) => {
+  async (req: Request, res: Response) => {
     const { _id } = req.user as userDocument;
     const document = await getUserCart(_id);
 
@@ -15,7 +21,7 @@ export const getUserCartHandler = asyncHandler(
 );
 
 export const removeCartHandler = asyncHandler(
-  async (req: authRequest, res: Response) => {
+  async (req: Request, res: Response) => {
     const { _id } = req.user as userDocument;
     const document = await removeCart(_id);
 
@@ -24,10 +30,41 @@ export const removeCartHandler = asyncHandler(
 );
 
 export const removeItemHandler = asyncHandler(
-  async (req: authRequest, res: Response) => {
+  async (req: Request<{ id: string }>, res: Response) => {
     const { _id } = req.user as userDocument;
     const document = await removeItem(new Types.ObjectId(req.params.id), _id);
 
-    
+    res.status(OK).json({
+      success: true,
+      message: "Item removed",
+      results: document,
+    });
+  }
+);
+
+export const updateItemQuantityHandler = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { _id } = req.user as userDocument;
+
+    const document = await updateItemQuantity(req.body, _id);
+
+    res.status(OK).json({
+      success: true,
+      message: "Quantity updated",
+      results: document,
+    });
+  }
+);
+
+export const addCartHandler = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { _id } = req.user as userDocument;
+    const { document, statusCode } = await addCart(req.body, _id);
+
+    res.status(statusCode).json({
+      success: true,
+      message: "Cart created/updated",
+      results: document,
+    });
   }
 );

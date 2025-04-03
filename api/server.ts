@@ -1,9 +1,10 @@
 import "dotenv/config";
 import express from "express";
-import connectDB from "../backend/config/db";
 import cookieParser from "cookie-parser";
+import connectDB from "../backend/config/db";
 import authRoutes from "../backend/routes/auth.route";
 import userRoutes from "../backend/routes/user.route";
+import cartRoutes from "../backend/routes/cart.route";
 import orderRoutes from "../backend/routes/order.route";
 import productRoutes from "../backend/routes/product.route";
 import paymentRoutes from "../backend/routes/payment.route";
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/apiv2/auth", authRoutes);
 app.use("/apiv2/user", userRoutes);
+app.use("/apiv2/cart", cartRoutes);
 app.use("/apiv2/order", orderRoutes);
 app.use("/apiv2/product", productRoutes);
 app.use("/apiv2/payment", paymentRoutes);

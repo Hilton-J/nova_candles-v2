@@ -14,7 +14,7 @@ import Product from "../models/product.model";
 import asyncHandler from "express-async-handler";
 import { CREATED, OK } from "../constants/http.codes";
 import { NextFunction, Request, Response } from "express";
-import { authRequest } from "../interfaces/user.interface";
+import { userDocument } from "../interfaces/user.interface";
 
 export const getAllProductsHandler = getAllDocs(Product);
 export const deleteProductHandler = deleteOneDoc(Product);
@@ -32,8 +32,8 @@ export const createProductHandler = asyncHandler(
 );
 
 export const addReviewHandler = asyncHandler(
-  async (req: authRequest, res: Response, next: NextFunction) => {
-    const { _id } = req.user!;
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { _id } = req.user as userDocument;
 
     const document = await addReview(new Types.ObjectId(req.params.id), {
       ...req.body,
