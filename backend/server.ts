@@ -19,11 +19,11 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/apiv2/auth", authRoutes);
-app.use("/apiv2/user", userRoutes);
+app.use("/apiv2/users", userRoutes);
 app.use("/apiv2/cart", cartRoutes);
-app.use("/apiv2/order", orderRoutes);
-app.use("/apiv2/product", productRoutes);
-app.use("/apiv2/payment", paymentRoutes);
+app.use("/apiv2/orders", orderRoutes);
+app.use("/apiv2/products", productRoutes);
+app.use("/apiv2/payments", paymentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
