@@ -112,8 +112,6 @@ export const addCart = async (itemData: IItem, userId: Types.ObjectId) => {
       totalPrice: itemData.price * itemData.quantity,
     });
 
-    console.log("Else block", document);
-
     if (!document) throw new HttpError("Error creating cart", BAD_REQUEST);
     statusCode = CREATED;
   }

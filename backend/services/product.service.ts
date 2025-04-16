@@ -6,7 +6,6 @@ import {
 import HttpError from "../utils/httpError";
 import Product from "../models/product.model";
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http.codes";
-import Order from "../models/order.model";
 
 export const createProduct = async (productData: productDocument) => {
   const { productName, size } = productData;
@@ -27,11 +26,11 @@ export const createProduct = async (productData: productDocument) => {
 };
 
 export const addReview = async (
-  id: Types.ObjectId,
+  productId: Types.ObjectId,
   reviewData: reviewDocument
 ) => {
   const reviewed = await Product.findOne({
-    _id: id,
+    _id: productId,
     "reviews.userId": reviewData.userId,
   });
 
@@ -40,7 +39,7 @@ export const addReview = async (
   }
 
   const document = await Product.findByIdAndUpdate(
-    id,
+    productId,
     {
       $push: {
         reviews: {
@@ -70,14 +69,10 @@ export const getProductByNameAndSize = async (name: string, size: string) => {
   return document;
 };
 
-export const addImage = async (id: Types.ObjectId, images: string) => {
+export const addImage = async (productId: Types.ObjectId, images: string) => {
   const document = await Product.findByIdAndUpdate(
-    id,
-    {
-      $push: {
-        images,
-      },
-    },
+    productId,
+    { $push: { images } },
     { new: true, runValidators: true, timestamps: true }
   );
 
