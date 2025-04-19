@@ -1,10 +1,16 @@
 import { Document, Types } from "mongoose";
 
+export interface IPrice {
+  small: number,
+  medium: number,
+  large: number,
+}
+
 export interface IProduct {
   productName: string;
   description: string;
-  price: number;
-  size: string;
+  price: IPrice;
+  fragrance: string;
   stock: number;
   type: string;
   images?: string[];

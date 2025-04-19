@@ -11,8 +11,12 @@ export const reviewProductSchema = z.object({
 export const productSchema = z.object({
   productName: z.string().min(1),
   description: z.string().min(1),
-  price: z.coerce.number(),
-  size: z.string(),
+  price: z.object({
+    small: z.coerce.number().optional(),
+    medium: z.coerce.number().optional(),
+    large: z.coerce.number().optional(),
+  }),
+  fragrance: z.string(),
   stock: z.coerce.number(),
   type: z.string(),
   images: z.string().regex(base64ImageRegex, "Invalid base64 image").optional(),
@@ -21,8 +25,12 @@ export const productSchema = z.object({
 export const updateProductSchema = z.object({
   productName: z.string().min(1).optional(),
   description: z.string().min(1).optional(),
-  price: z.coerce.number().optional(),
-  size: z.string().optional(),
+  price: z.object({
+    small: z.coerce.number().optional(),
+    medium: z.coerce.number().optional(),
+    large: z.coerce.number().optional(),
+  }),
+  fragrance: z.string().optional(),
   stock: z.coerce.number().optional(),
   type: z.string().optional(),
   isActive: z.string().optional(), //z.coerce.boolean() will not work because it does not behave the way is expected

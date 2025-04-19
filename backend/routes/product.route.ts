@@ -4,9 +4,10 @@ import {
   addReviewHandler,
   createProductHandler,
   deleteProductHandler,
-  getAllProductsHandler,
-  getProductByNameAndSizeHandler,
   updateProductHandler,
+  getAllProductsHandler,
+  getProductByIdHandler,
+  getProductByNameAndSizeHandler,
 } from "../controllers/product.controller";
 import {
   validateCreateProduct,
@@ -36,7 +37,7 @@ router.patch(
   addReviewHandler
 );
 
-router.get("/:name", getProductByNameAndSizeHandler);
+// router.get("/:name", getProductByNameAndSizeHandler);
 
 router
   .route("/:id")
@@ -46,6 +47,7 @@ router
     validateUpdateProduct,
     updateProductHandler
   )
+  .get(getProductByIdHandler)
   .delete(protect, authorizeRoles("admin"), deleteProductHandler)
   .patch(protect, authorizeRoles("admin"), validateImage, addImageHandler);
 
