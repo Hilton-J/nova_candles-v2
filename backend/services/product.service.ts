@@ -8,9 +8,9 @@ import Product from "../models/product.model";
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http.codes";
 
 export const createProduct = async (productData: productDocument) => {
-  const { productName, size } = productData;
+  const { productName } = productData;
 
-  const exists = await Product.findOne({ productName, size });
+  const exists = await Product.findOne({ productName });
 
   if (exists) {
     throw new HttpError("Product already exists", CONFLICT);

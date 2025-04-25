@@ -1,4 +1,5 @@
 import {
+  IPrice,
   productDocument,
   reviewDocument,
 } from "../interfaces/product.interface";
@@ -11,12 +12,18 @@ const reviewSchema = new Schema<reviewDocument>({
   date: { type: Date, default: Date.now },
 });
 
+const priceSchema = {
+  small: Number,
+  medium: Number,
+  large: Number,
+};
+
 const productSchema = new Schema<productDocument>(
   {
     productName: { type: String, required: true },
     description: { type: String, required: true },
-    price: { type: Number, required: true },
-    size: { type: String, required: true },
+    price: priceSchema,
+    fragrance: { type: String, required: true },
     stock: { type: Number, required: true },
     type: { type: String, required: true },
     images: [String],

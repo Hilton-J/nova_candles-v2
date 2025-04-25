@@ -6,9 +6,10 @@ import {
   getProductByNameAndSize,
 } from "../services/product.service";
 import {
-  deleteOneDoc,
+  getOneDoc,
   getAllDocs,
   updateOneDoc,
+  deleteOneDoc,
 } from "../services/crudHandlerFactory";
 import Product from "../models/product.model";
 import asyncHandler from "express-async-handler";
@@ -16,6 +17,7 @@ import { CREATED, OK } from "../constants/http.codes";
 import { NextFunction, Request, Response } from "express";
 import { userDocument } from "../interfaces/user.interface";
 
+export const getProductByIdHandler = getOneDoc(Product);
 export const getAllProductsHandler = getAllDocs(Product);
 export const deleteProductHandler = deleteOneDoc(Product);
 export const updateProductHandler = updateOneDoc(Product);
