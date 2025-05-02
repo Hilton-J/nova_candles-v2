@@ -3,6 +3,12 @@ import { Model, model, Schema } from "mongoose";
 import { orderDocument } from "../interfaces/order.interface";
 import { addressSchema } from "./user.model";
 
+export interface orderedItems {
+  productName: { type: String; required: true };
+  quantity: { type: Number; required: true };
+  price: { type: Number; required: true };
+}
+
 const orderSchema = new Schema<orderDocument>(
   {
     orderNumber: { type: String, unique: true },

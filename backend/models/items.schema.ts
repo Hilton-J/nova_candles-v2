@@ -1,6 +1,6 @@
 import { Schema, Types } from "mongoose";
 
-type ProductSize = "small" | "medium" | "large";
+type ProductSize = "small" | "medium" | "large"; //TODO: Add a default price
 
 export interface IItem {
   productId: Types.ObjectId;
