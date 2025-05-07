@@ -2,16 +2,19 @@ import bcrypt from "bcryptjs";
 import { model, Model, Schema } from "mongoose";
 import { addressDocument, userDocument } from "../interfaces/user.interface";
 
-export const addressSchema = new Schema<addressDocument>({
-  recipientName: { type: String },
-  recipientLastName: { type: String },
-  recipientPhoneNumber: { type: String },
-  streetAddress: { type: String },
-  apartment: { type: String },
-  city: { type: String },
-  province: { type: String },
-  postalCode: { type: String },
-});
+export const addressSchema = new Schema<addressDocument>(
+  {
+    recipientName: { type: String },
+    recipientLastName: { type: String },
+    recipientPhoneNumber: { type: String },
+    streetAddress: { type: String },
+    apartment: { type: String },
+    city: { type: String },
+    province: { type: String },
+    postalCode: { type: String },
+  },
+  { _id: false } // Avoids creating _id for this subdocument
+);
 
 const userSchema = new Schema<userDocument>(
   {

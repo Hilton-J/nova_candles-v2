@@ -15,7 +15,6 @@ export const getUserCartHandler = asyncHandler(
   async (req: Request, res: Response) => {
     const { _id } = req.user as userDocument;
     const document = await getUserCart(_id);
-
     res.status(OK).json(document);
   }
 );
