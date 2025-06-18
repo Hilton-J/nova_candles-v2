@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "build/server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node build/server.js",
     "server": "ts-node-dev --respawn --transpile-only backend/server.ts"
   },
