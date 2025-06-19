@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express from "express";
+import express, { Request, Response } from "express";
 import connectDB from "./config/db";
 import logger from "./utils/logger";
 import env from "./schemas/envSchema";
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", async (req, res) => {
+app.use("/", async (req: Request, res: Response) => {
   res.send("Server deployed successfully");
 });
 
