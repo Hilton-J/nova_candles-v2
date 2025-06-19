@@ -23,7 +23,7 @@ jobs:
           node-version: "22" # Or your specific Node.js version (e.g., 18, 22)
           cache: "npm" # Cache npm dependencies for faster installs
 
-      - name: Install dependencies
+      - name: Install dependencies (including devDependencies)
         run: npm install # Installs both dependencies and devDependencies (because NODE_ENV is not 'production' here)
 
       # - name: Run ESLint (Linting)
