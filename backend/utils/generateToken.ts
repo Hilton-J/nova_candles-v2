@@ -38,7 +38,7 @@ const accessCookieOptions = (): CookieOptions => ({
   secure: env.NODE_ENV === "production",
   sameSite: "strict", //This prevents CSRF (Cross Site ERequest Forgery) attachs
   expires: after30Days(), //Will expire after 30 day
-  path: "/apiv2",
+  path: "/api/v2",
 });
 
 /**
@@ -51,7 +51,7 @@ const refreshCookieOptions = (): CookieOptions => ({
   sameSite: "strict",
   secure: env.NODE_ENV === "production", // Use secure cookies only in production
   expires: after90Days(), // Long-lived refresh token
-  path: "/apiv2/refresh", // Adjust as needed, separate endpoint for refresh
+  path: "/api/v2/refresh", // Adjust as needed, separate endpoint for refresh
 });
 
 export default generateToken;

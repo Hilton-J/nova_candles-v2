@@ -22,12 +22,12 @@ app.use("/", async (req: Request, res: Response) => {
   res.send("Server deployed successfully");
 });
 
-app.use("/apiv2/auth", authRoutes);
-app.use("/apiv2/users", userRoutes);
-app.use("/apiv2/cart", cartRoutes);
-app.use("/apiv2/orders", orderRoutes);
-app.use("/apiv2/products", productRoutes);
-app.use("/apiv2/payments", paymentRoutes);
+app.use("/api/v2/auth", authRoutes);
+app.use("/api/v2/users", userRoutes);
+app.use("/api/v2/cart", cartRoutes);
+app.use("/api/v2/orders", orderRoutes);
+app.use("/api/v2/products", productRoutes);
+app.use("/api/v2/payments", paymentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
