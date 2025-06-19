@@ -1,6 +1,10 @@
 # .github/workflows/deploy-backend.yml
 name: Backend CI/CD to Render
 
+permissions:
+  contents: read
+  deployments: write
+
 on:
   push:
     branches:
