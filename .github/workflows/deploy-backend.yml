@@ -1,0 +1,43 @@
+# .github/workflows/deploy-backend.yml
+name: Backend CI/CD to Render
+
+on:
+  push:
+    branches:
+      - main # Trigger on pushes to the main branch
+  pull_request:
+    branches:
+      - main # Run CI checks on pull requests to main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Action to checkout your repository
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # Action to set up Node.js environment
+        with:
+          node-version: "22" # Or your specific Node.js version (e.g., 18, 22)
+          cache: "npm" # Cache npm dependencies for faster installs
+
+      - name: Install dependencies
+        run: npm install # Installs both dependencies and devDependencies (because NODE_ENV is not 'production' here)
+
+      # - name: Run ESLint (Linting)
+      #   run: npm run lint # Assuming you have a 'lint' script in package.json
+      #   continue-on-error: true # Allow subsequent steps to run even if linting fails, but mark job as failed
+      # You might want to remove 'continue-on-error' if linting failures should block deployment
+
+      - name: Build TypeScript Project
+        run: npm run build # Compiles TypeScript to JavaScript (e.g., into 'dist' folder)
+
+      - name: Trigger Render Deployment
+        uses: JorgeLNJunior/render-deploy@v1.4.5 # Community action to trigger Render deployment
+        with:
+          service_id: ${{ secrets.RENDER_SERVICE_ID }} # Use the GitHub Secret for your Render Service ID
+          api_key: ${{ secrets.RENDER_API_KEY }} # Use the GitHub Secret for your Render API Key
+          # clear_cache: true # Uncomment if you want Render to clear its build cache on each deploy
+          # wait_deploy: true # Uncomment if you want the GitHub Action to wait for Render deployment to complete
