@@ -40,10 +40,10 @@
     "@types/lodash": "^4.17.16",
     "@types/mongoose": "^5.11.96",
     "@types/nanoid": "^2.1.0",
-    "@types/pino": "^7.0.4"
+    "@types/pino": "^7.0.4",
+    "pino-pretty": "^13.0.0"
   },
   "devDependencies": {
-    "pino-pretty": "^13.0.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2"
   }
