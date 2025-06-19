@@ -1,5 +1,4 @@
 import "dotenv/config";
-import express from "express";
 import connectDB from "./config/db";
 import logger from "./utils/logger";
 import env from "./schemas/envSchema";
@@ -8,6 +7,7 @@ import authRoutes from "./routes/auth.route";
 import userRoutes from "./routes/user.route";
 import cartRoutes from "./routes/cart.route";
 import orderRoutes from "./routes/order.route";
+import express, { Response, Request } from "express";
 import productRoutes from "./routes/product.route";
 import paymentRoutes from "./routes/payment.route";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware";
@@ -17,6 +17,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello Render!!");
+});
 
 app.use("/api/v2/auth", authRoutes);
 app.use("/api/v2/users", userRoutes);
