@@ -9,8 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    // "lib": ["es2024"], // <-- Added "node" here
-    // "types": ["node"] // <-- Added "node" here for good measure
+    "lib": ["es2024"], // <-- Added "node" here
+    "types": ["node"] // <-- Added "node" here for good measure
   },
   "include": ["backend/**/*.ts"]
 }
