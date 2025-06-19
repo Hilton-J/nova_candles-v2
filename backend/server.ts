@@ -18,6 +18,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/", async (req, res) => {
+  res.send("Server deployed successfully");
+});
+
 app.use("/apiv2/auth", authRoutes);
 app.use("/apiv2/users", userRoutes);
 app.use("/apiv2/cart", cartRoutes);
