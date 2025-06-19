@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express, { Request, Response } from "express";
+import express from "express";
 import connectDB from "./config/db";
 import logger from "./utils/logger";
 import env from "./schemas/envSchema";
@@ -17,10 +17,6 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-
-app.use("/", async (req: Request, res: Response) => {
-  res.send("Server deployed successfully");
-});
 
 app.use("/api/v2/auth", authRoutes);
 app.use("/api/v2/users", userRoutes);
