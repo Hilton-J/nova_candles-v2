@@ -41,7 +41,7 @@ jobs:
       - name: Trigger Render Deployment
         uses: JorgeLNJunior/render-deploy@v1.4.5 # Community action to trigger Render deployment
         with:
-          service_id: ${{ secrets.RENDER_SERVICE_ID }} # Use the GitHub Secret for your Render Service ID
+          service_id: ${{ secrets.RENDER_SERVICE_ID }} # Ensure 'RENDER_SERVICE_ID' is set in your repository's GitHub Secrets (Settings > Secrets and variables > Actions)
           api_key: ${{ secrets.RENDER_API_KEY }} # Use the GitHub Secret for your Render API Key
           github_token: ${{ secrets.GITHUB_TOKEN }} # Required GitHub token for deployment
           clear_cache: true # Uncomment if you want Render to clear its build cache on each deploy

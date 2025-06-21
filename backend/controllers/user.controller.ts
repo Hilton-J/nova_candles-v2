@@ -20,7 +20,7 @@ export const addShippingAddressHandler = asyncHandler(
 
     res.status(OK).json({
       success: true,
-      message: `Address added successfully`,
+      message: "Address added successfully",
       results: document,
     });
   }
@@ -34,7 +34,7 @@ export const updateUserHandler = asyncHandler(
 
     res.status(OK).json({
       success: true,
-      message: `User updated successfully`,
+      message: "User updated successfully",
       results: document,
     });
   }

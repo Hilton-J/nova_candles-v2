@@ -57,7 +57,7 @@ const getOneDoc = <T>(Model: Model<T>) =>
       const document = await query;
 
       if (!document) {
-        return next(new HttpError(`No document found with that ID`, NOT_FOUND));
+        return next(new HttpError("No document found with that ID", NOT_FOUND));
       }
 
       res.status(OK).json(document);

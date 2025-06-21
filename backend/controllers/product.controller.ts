@@ -44,7 +44,7 @@ export const addReviewHandler = asyncHandler(
 
     res.status(OK).json({
       success: true,
-      message: `Review added successfully`,
+      message: "Review added successfully",
       results: document,
     });
   }
@@ -76,7 +76,7 @@ export const addImageHandler = asyncHandler(
 
     res.status(OK).json({
       success: true,
-      message: `Image added successfully`,
+      message: "Image added successfully",
       results: document,
     });
   }

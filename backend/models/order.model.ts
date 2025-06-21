@@ -4,9 +4,9 @@ import { orderDocument } from "../interfaces/order.interface";
 import { addressSchema } from "./user.model";
 
 export interface orderedItems {
-  productName: { type: String; required: true };
-  quantity: { type: Number; required: true };
-  price: { type: Number; required: true };
+  productName: { type: string; required: true };
+  quantity: { type: number; required: true };
+  price: { type: number; required: true };
 }
 
 const orderSchema = new Schema<orderDocument>(

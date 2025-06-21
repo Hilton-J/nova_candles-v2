@@ -15,7 +15,7 @@ export const updateUser = async (
   }).select("-jwt_secret -password");
 
   if (!document) {
-    throw new HttpError(`No user found with that ID`, NOT_FOUND);
+    throw new HttpError("No user found with that ID", NOT_FOUND);
   }
 
   return document;

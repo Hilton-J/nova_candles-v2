@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 const passwordSchema = z
-.string()
-.trim()
-.min(3, "Password must be at least 3 characters");
+  .string()
+  .trim()
+  .min(3, "Password must be at least 3 characters");
 const emailSchema = z.string().email("Invalid email").trim();
 
 export const loginSchema = z.object({
