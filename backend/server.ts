@@ -30,7 +30,7 @@ app.use("/api/v2/products", productRoutes);
 app.use("/api/v2/payments", paymentRoutes);
 
 app.use(notFound);
-app.use(errorHandler);
+app.use(errorHandler as ErrorRequestHandler);
 
 app.listen(env.PORT, async () => {
   await connectDB();
