@@ -11,10 +11,10 @@ import {
   updateOneDoc,
   deleteOneDoc,
 } from "../services/crudHandlerFactory";
+import { Request, Response } from "express";
 import Product from "../models/product.model";
 import asyncHandler from "express-async-handler";
 import { CREATED, OK } from "../constants/http.codes";
-import { NextFunction, Request, Response } from "express";
 import { userDocument } from "../interfaces/user.interface";
 
 export const getProductByIdHandler = getOneDoc(Product);
@@ -34,7 +34,7 @@ export const createProductHandler = asyncHandler(
 );
 
 export const addReviewHandler = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { _id } = req.user as userDocument;
 
     const document = await addReview(new Types.ObjectId(req.params.id), {
@@ -52,7 +52,7 @@ export const addReviewHandler = asyncHandler(
 
 export const getProductByNameAndSizeHandler = asyncHandler(
   async (
-    req: Request<{ name: string }, {}, {}, { size: string }>,
+    req: Request<{ name: string }, object, object, { size: string }>,
     res: Response
   ) => {
     const document = await getProductByNameAndSize(
@@ -66,7 +66,7 @@ export const getProductByNameAndSizeHandler = asyncHandler(
 
 export const addImageHandler = asyncHandler(
   async (
-    req: Request<{ id: string }, {}, { images: string }>,
+    req: Request<{ id: string }, object, { images: string }>,
     res: Response
   ) => {
     const document = await addImage(

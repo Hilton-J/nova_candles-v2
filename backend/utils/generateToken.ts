@@ -9,7 +9,7 @@ import { after30Days, after90Days } from "../constants/date.const";
 const generateToken = async (res: Response, user: userDocument) => {
   try {
     const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
+    const refreshToken = generateRefreshToken();
 
     user.refreshToken = refreshToken;
     await user.save();

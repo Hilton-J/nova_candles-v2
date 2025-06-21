@@ -1,16 +1,16 @@
 import { Router } from "express";
 import {
-  getAllUsersHandler,
-  getUserByIdHandler,
   deleteUserHandler,
   updateUserHandler,
+  getAllUsersHandler,
+  getUserByIdHandler,
   addShippingAddressHandler,
 } from "../controllers/user.controller";
 import {
-  validateShippingAddress,
   validateUpdateUser,
-} from "../middlewares/validators/userValidator";
-import { protect, authorizeRoles } from "../middlewares/authMiddleware";
+  validateShippingAddress,
+} from "../middlewares/validators/userValidation";
+import { protect, authorizeRoles } from "../middlewares/auth.middleware";
 
 const router = Router();
 

@@ -30,11 +30,10 @@ const handleZodError = (err: ZodError) => {
 };
 
 export const errorHandler = (
-  err: any | Error | ZodError | HttpError,
+  err: unknown | Error | ZodError | HttpError,
   req: Request,
   res: Response,
-  next: NextFunction
-): any => {
+): unknown => {
 
   logger.error(err);
 
@@ -52,6 +51,10 @@ export const errorHandler = (
 
   res.status(INTERNAL_SERVER_ERROR).json({
     message: "Internal Server Error",
-    stack: env.NODE_ENV === "production" ? null : err.stack,
+    stack: env.NODE_ENV === "production"
+      ? null
+      : typeof err === "object" && err !== null && "stack" in err
+        ? (err as Error).stack
+        : undefined,
   });
 };

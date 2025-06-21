@@ -1,5 +1,5 @@
+import itemsSchema from "./items.schema";
 import { Model, model, Schema } from "mongoose";
-import itemsSchema, { IItem } from "./items.schema";
 import { cartDocument } from "../interfaces/cart.interface";
 
 const cartSchema = new Schema<cartDocument>(

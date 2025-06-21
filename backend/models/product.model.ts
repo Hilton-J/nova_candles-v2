@@ -1,5 +1,4 @@
 import {
-  IPrice,
   productDocument,
   reviewDocument,
 } from "../interfaces/product.interface";

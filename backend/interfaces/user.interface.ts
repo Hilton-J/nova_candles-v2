@@ -1,4 +1,3 @@
-import { Request } from "express";
 import { Document, Types } from "mongoose";
 
 export interface IAddress {
@@ -11,6 +10,7 @@ export interface IAddress {
   province: string;
   postalCode: string;
 }
+
 export interface addressDocument extends IAddress, Document {
   _id: Types.ObjectId;
 }
@@ -29,8 +29,9 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
   matchPassword(enteredPassword: string): Promise<boolean>;
-  omitField(fields: string[] | string): any;
+  omitField<T extends keyof this>(fields: T[] | T): Omit<this, T>;
 }
+
 export interface userDocument extends IUser, Document {
   _id: Types.ObjectId;
 }

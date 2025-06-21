@@ -7,15 +7,14 @@ import {
   updateProductHandler,
   getAllProductsHandler,
   getProductByIdHandler,
-  getProductByNameAndSizeHandler,
 } from "../controllers/product.controller";
 import {
-  validateCreateProduct,
   validateImage,
+  validateCreateProduct,
   validateReviewProduct,
   validateUpdateProduct,
-} from "../middlewares/validators/productValidator";
-import { authorizeRoles, protect } from "../middlewares/authMiddleware";
+} from "../middlewares/validators/productValidation";
+import { authorizeRoles, protect } from "../middlewares/auth.middleware";
 
 const router = Router();
 

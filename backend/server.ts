@@ -10,7 +10,7 @@ import orderRoutes from "./routes/order.route";
 import express, { Response, Request } from "express";
 import productRoutes from "./routes/product.route";
 import paymentRoutes from "./routes/payment.route";
-import { errorHandler, notFound } from "./middlewares/errorMiddleware";
+import { errorHandler, notFound } from "./middlewares/error.middleware";
 
 const app = express();
 

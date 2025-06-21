@@ -1,9 +1,13 @@
 import { Router } from "express";
 import {
+  loginHandler,
+  logoutHandler,
+  registerHandler,
+} from "../controllers/auth.controller";
+import {
   validateLogin,
   validateRegister,
-} from "../middlewares/validators/authValidator";
-import { loginHandler, logoutHandler, registerHandler } from "../controllers/auth.controller";
+} from "../middlewares/validators/authValidation";
 
 const router = Router();
 

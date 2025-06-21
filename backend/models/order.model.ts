@@ -1,7 +1,7 @@
 import itemsSchema from "./items.schema";
+import { addressSchema } from "./user.model";
 import { Model, model, Schema } from "mongoose";
 import { orderDocument } from "../interfaces/order.interface";
-import { addressSchema } from "./user.model";
 
 export interface orderedItems {
   productName: { type: string; required: true };

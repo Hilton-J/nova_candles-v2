@@ -1,13 +1,13 @@
 import { Router } from "express";
 import {
   addCartHandler,
-  getUserCartHandler,
   removeCartHandler,
   removeItemHandler,
+  getUserCartHandler,
   updateItemQuantityHandler,
 } from "../controllers/cart.controller";
-import validateCart from "../middlewares/validators/cartValidator";
-import { authorizeRoles, protect } from "../middlewares/authMiddleware";
+import validateCart from "../middlewares/validators/cartValidation";
+import { authorizeRoles, protect } from "../middlewares/auth.middleware";
 
 const router = Router();
 

@@ -46,7 +46,9 @@ export const protect = asynchandler(
       req.user = user.omitField("jwt_secret");
       next();
     } catch (error) {
-      next(new HttpError("Not Authorized, invalid token", UNAUTHORIZED));
+      next(
+        new HttpError(`Not Authorized, invalid token ${error}`, UNAUTHORIZED)
+      );
     }
   }
 );

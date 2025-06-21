@@ -67,7 +67,7 @@ const getOneDoc = <T>(Model: Model<T>) =>
 const getAllDocs = <T>(Model: Model<T>) =>
   asyncHandler(
     async (
-      req: Request<{}, {}, {}, { page?: number }>,
+      req: Request<object, object, object, { page?: number }>,
       res: Response,
       next: NextFunction
     ) => {
