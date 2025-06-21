@@ -12,6 +12,10 @@ const generateAccessToken = (user: userDocument) => {
     audience: "API V2",
   };
 
+  if (!user.jwt_secret) {
+    throw new Error("JWT secret is missing for the user.");
+  }
+
   return jwt.sign(
     {
       id: user._id,

@@ -31,10 +31,9 @@ export default tseslint.config(
       // Custom rules or overrides go here.
       // Examples (same as before):
       "no-console": "warn", // Warn about console.log statements
-      "@typescript-eslint/no-unused-vars": "warn",
-      "indent": ["error", 2], // Enforce 2-space indentation
+      "semi": ["error", "always"], // Enforce semicolons'
       "quotes": ["error", "double"], // Enforce double quotes
-      "semi": ["error", "always"], // Enforce semicolons
+      "@typescript-eslint/no-unused-vars": "warn",
       // "@typescript-eslint/explicit-module-boundary-types": "off"
     },
   },

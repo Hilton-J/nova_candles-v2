@@ -1,8 +1,8 @@
 import { ZodError } from "zod";
 import {
-  INTERNAL_SERVER_ERROR,
   NOT_FOUND,
   BAD_REQUEST,
+  INTERNAL_SERVER_ERROR,
 } from "../constants/http.codes";
 import logger from "../utils/logger";
 import env from "../schemas/envSchema";
@@ -33,8 +33,8 @@ export const errorHandler = (
   err: unknown | Error | ZodError | HttpError,
   req: Request,
   res: Response,
+  next: NextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
 ): unknown => {
-
   logger.error(err);
 
   if (err instanceof HttpError) {
@@ -51,9 +51,10 @@ export const errorHandler = (
 
   res.status(INTERNAL_SERVER_ERROR).json({
     message: "Internal Server Error",
-    stack: env.NODE_ENV === "production"
-      ? null
-      : typeof err === "object" && err !== null && "stack" in err
+    stack:
+      env.NODE_ENV === "production"
+        ? null
+        : typeof err === "object" && err !== null && "stack" in err
         ? (err as Error).stack
         : undefined,
   });

@@ -7,10 +7,10 @@ import authRoutes from "./routes/auth.route";
 import userRoutes from "./routes/user.route";
 import cartRoutes from "./routes/cart.route";
 import orderRoutes from "./routes/order.route";
-import express, { Response, Request } from "express";
 import productRoutes from "./routes/product.route";
 import paymentRoutes from "./routes/payment.route";
 import { errorHandler, notFound } from "./middlewares/error.middleware";
+import express, { Response, Request, ErrorRequestHandler } from "express";
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use("/api/v2/products", productRoutes);
 app.use("/api/v2/payments", paymentRoutes);
 
 app.use(notFound);
-app.use(errorHandler);
+app.use(errorHandler as ErrorRequestHandler);
 
 app.listen(env.PORT, async () => {
   await connectDB();

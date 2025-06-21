@@ -24,7 +24,7 @@ export interface IUser {
   role: "customer" | "admin";
   shipToAddress: addressDocument[];
   isActive: boolean;
-  jwt_secret: string;
+  jwt_secret?: string;
   refreshToken?: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -34,12 +34,9 @@ export interface IUser {
 
 export interface userDocument extends IUser, Document {
   _id: Types.ObjectId;
+  omitField<T extends keyof this>(fields: T[] | T): Omit<this, T>;
 }
 
 export interface registerUser extends userDocument {
   confirmPassword: string;
 }
-
-// export interface authRequest extends Request {
-//   user?: userDocument;
-// }
