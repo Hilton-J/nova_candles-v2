@@ -1,7 +1,7 @@
 {
   "name": "nova_candles-v2",
   "version": "1.0.0",
-  "main": "backend/server.ts",
+  "main": "build/server.js",
   "scripts": {
     "build": "tsc",
     "start": "node build/server.js",
