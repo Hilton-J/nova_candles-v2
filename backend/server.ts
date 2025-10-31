@@ -15,7 +15,11 @@ import express, { Response, Request, ErrorRequestHandler } from "express";
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:3005",
+];
 
 function isAllowedOrigin(origin?: string) {
   if (!origin) return true; // non-browser or same-origin
