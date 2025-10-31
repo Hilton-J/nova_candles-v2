@@ -12,7 +12,7 @@ const connectDB = async () => {
     } else {
       logger.error(`Error: ${String(error)}`);
     }
-    process.exit(1); //1 code mean exit with failure, 0 means success
+    process.exit(1);
   }
 };
 
