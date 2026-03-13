@@ -12,6 +12,12 @@ export const loginUserHandler = async (credentials: userDocument) => {
   if (!user || !(await user.matchPassword(password)))
     throw new HttpError("Invalid email or password", UNAUTHORIZED);
 
+  if (!user.isActive)
+    throw new HttpError(
+      "Account is deactivated. Please contact support.",
+      UNAUTHORIZED,
+    );
+
   return user;
 };
 
